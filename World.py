@@ -59,6 +59,18 @@ class World:
                     neighbour_values.append(self.world[ny%self.height][nx%self.width])
         return neighbour_values
 
+    def get_agents(self):
+        """
+        Returns a list of values for all the locations of agents on the grid ``(x, y)``
+        """
+        agents = []
+        for x in range(self.world.world.width +1):
+            for y in range(self.world.world.height+1):
+                if self.world.world[y][x] != 0:
+                    agents.append((x,y))
+
+        return agents
+
     def __str__(self):
         print('-'*self.width*4)
         for row in self.world:
