@@ -40,6 +40,26 @@ class TestWorld(TestCase):
         x, y = 2, 0
         value = 4
         self.world.set(x, self.height-1, value)
+        # print(self.world.world)
         neighbours = self.world.get_neighbours(x, y)
+        # print(neighbours)
         self.assertEqual(8, len(neighbours))
         self.assertIn(value, neighbours)
+
+    def test_get_agents(self):
+        """
+        Tests getting all the agents in the world
+        """
+
+        self.world.set(0, 0)
+        self.world.set(1, 1)
+        self.world.set(3, 4)
+
+        agents = self.world.get_agents()
+
+        self.assertEqual([(0, 0), (1, 1), (3, 4)], agents)
+
+
+        # self.assertEqual(self.world.get(x, y), value)
+        # self.assertEqual(self.world.get(x, y), value)
+        # self.assertEqual(self.world.get(x, y), value)
