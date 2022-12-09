@@ -66,7 +66,7 @@ class World:
         agents = []
         for x in range(self.width +1):
             for y in range(self.height+1):
-                if self.world.world[y][x] != 0:
+                if self.world[y][x] != 0:
                     agents.append((x,y))
 
         return agents
