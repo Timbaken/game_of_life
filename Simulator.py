@@ -7,7 +7,7 @@ class Simulator:
     Read https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life for an introduction to Conway's Game of Life.
     """
 
-    def __init__(self, world=None, birth=None, survival=None):
+    def __init__(self, world=None, birth=None, survival=None, birthage=1, submissive_and_breedable=[1,2,3,4,5,6,7,8,9]):
         """
         Constructor for Game of Life simulator.
 
@@ -28,6 +28,9 @@ class Simulator:
             self.survival = [2, 3]
         else:
             self.survival = survival
+
+        self.birthage = birthage
+        self.submissive_and_breedable = submissive_and_breedable
 
     # def birth_and_survival_input(self, birth_or_survival):
     #     while True:
@@ -58,10 +61,11 @@ class Simulator:
             for y in range(self.world.height):
                 Neighbours = self.world.get_neighbours(x, y)
                 alive_Neighbours = len([i for i, e in enumerate(Neighbours) if e != 0])
+                submissive_and_breedable = len([i for i in Neighbours if i in self.submissive_and_breedable])
                 if self.world.get(x, y) != 0 and alive_Neighbours not in self.survival:
-                    change_list.append((x, y, 0))
-                elif self.world.get(x, y) == 0 and alive_Neighbours in self.birth:
-                    change_list.append((x, y, 1))
+                    change_list.append((x, y, self.world.get(x, y) - 1))
+                elif self.world.get(x, y) == 0 and submissive_and_breedable in self.birth:
+                    change_list.append((x, y, self.birthage))
 
         for x, y, value in change_list:
             self.world.set(x, y, value)
