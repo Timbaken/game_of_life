@@ -1,22 +1,48 @@
 from World import *
 
+
 class Simulator:
     """
     Game of Life simulator. Handles the evolution of a Game of Life ``World``.
     Read https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life for an introduction to Conway's Game of Life.
     """
 
-    def __init__(self, world = None):
+    def __init__(self, world=None, birth=None, survival=None):
         """
         Constructor for Game of Life simulator.
 
         :param world: (optional) environment used to simulate Game of Life.
         """
         self.generation = 0
-        if world == None:
+        if world is None:
             self.world = World(20)
         else:
             self.world = world
+
+        if birth is None:
+            self.birth = [3]
+        else:
+            self.birth = birth
+
+        if survival is None:
+            self.survival = [2, 3]
+        else:
+            self.survival = survival
+
+    # def birth_and_survival_input(self, birth_or_survival):
+    #     while True:
+    #         try:
+    #             birth_survival = int(input(f"bij hoeveel {'worden ze geboren?' if birth_or_survival == 'birth' else 'blijven ze leven?'}?"))
+    #             for i in str(birth_survival):
+    #                 if i == '9':
+    #                     raise ValueError
+    #             else:
+    #                 break
+    #         except ValueError:
+    #             print('invalide input')
+    #             continue
+    #
+    #     return [int(x) for x in str(birth_survival)]
 
     def update(self) -> World:
         """
@@ -32,11 +58,9 @@ class Simulator:
             for y in range(self.world.height):
                 Neighbours = self.world.get_neighbours(x, y)
                 alive_Neighbours = len([i for i, e in enumerate(Neighbours) if e != 0])
-                if self.world.get(x, y) != 0 and alive_Neighbours < 2:
+                if self.world.get(x, y) != 0 and alive_Neighbours not in self.survival:
                     change_list.append((x, y, 0))
-                elif self.world.get(x, y) != 0 and alive_Neighbours > 3:
-                    change_list.append((x, y, 0))
-                elif self.world.get(x, y) == 0 and alive_Neighbours == 3:
+                elif self.world.get(x, y) == 0 and alive_Neighbours in self.birth:
                     change_list.append((x, y, 1))
 
         for x, y, value in change_list:
