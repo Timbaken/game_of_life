@@ -6,7 +6,7 @@ class Simulator:
     Read https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life for an introduction to Conway's Game of Life.
     """
 
-    def __init__(self, birthage = 1, world = None, default_birth_and_survival = True, submissive_and_breedable = [1,2,3,4,5,6,7,8,9]):
+    def __init__(self, world = None):
         """
         Constructor for Game of Life simulator.
 
@@ -18,40 +18,6 @@ class Simulator:
         else:
             self.world = world
 
-        if default_birth_and_survival:
-            self.birth = [3]
-            self.survival = [2, 3]
-        else:
-            self.birth, self.survival = self.birth_and_survival_input()
-
-        self.birthage = birthage
-        self.submissive_and_breedable = submissive_and_breedable
-
-
-    def birth_and_survival_input(self):
-        while True:
-            try:
-                birth = int(input('bij hoeveel worden ze geboren?'))
-                for i in str(birth):
-                    if i == '9':
-                        raise ValueError
-                else:
-                    break
-            except ValueError:
-                print('invalide input')
-                continue
-        while True:
-            try:
-                survival = int(input('bij hoeveel blijven ze leven?'))
-                for i in str(survival):
-                    if i == '9':
-                        raise ValueError
-                else:
-                    break
-            except ValueError:
-                print('invalide input')
-                continue
-        return [int(x) for x in str(birth)], [int(x) for x in str(survival)]
     def update(self) -> World:
         """
         Updates the state of the world to the next generation. Uses rules for evolution.
@@ -60,23 +26,7 @@ class Simulator:
         """
         self.generation += 1
 
-        change_list = []
-
         #TODO: Do something to evolve the generation
-        for x in range(self.world.width):
-            for y in range(self.world.height):
-                Neighbours = self.world.get_neighbours(x, y)
-                alive_Neighbours = len([i for i, e in enumerate(Neighbours) if e != 0])
-                submissive_and_breedable = len([i for i in Neighbours if i in self.submissive_and_breedable])
-                if self.world.get(x, y) != 0 and alive_Neighbours not in self.survival:
-                    change_list.append((x, y, self.world.get(x, y) - 1))
-                elif self.world.world[y][x] == 0 and submissive_and_breedable in self.birth:
-                    change_list.append((x, y, self.birthage))
-
-        for x, y, value in change_list:
-            self.world.set(x, y, value)
-
-
 
         return self.world
 

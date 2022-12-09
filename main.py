@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
 
     w = World(grid_width, grid_heigth)
-    sim = Simulator(6, w, True)
+    sim = Simulator(w)
 
     if VISUALISATION:
         vis = Visualisation(sim)
