@@ -64,8 +64,8 @@ class World:
         Returns a list of values for all the locations of agents on the grid ``(x, y)``
         """
         agents = []
-        for x in range(self.world.world.width +1):
-            for y in range(self.world.world.height+1):
+        for x in range(self.width +1):
+            for y in range(self.height+1):
                 if self.world.world[y][x] != 0:
                     agents.append((x,y))
 
