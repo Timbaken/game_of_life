@@ -152,6 +152,65 @@ class TestSimulator(TestCase):
         sim4.update()
         self.assertSequenceEqual(sim4.get_world().world.tolist(), state_fiveteen.tolist())
 
+        state_sixteen = np.array([[0, 0, 0, 0, 0],
+                                  [0, 0, 0, 0, 0],
+                                  [0, 0, 6, 0, 0],
+                                  [0, 0, 0, 0, 0],
+                                  [0, 0, 0, 0, 0]])
+        state_seventeen = np.array([[0, 0, 0, 0, 0],
+                                  [0, 0, 0, 0, 0],
+                                  [0, 0, 3, 0, 0],
+                                  [0, 0, 0, 0, 0],
+                                  [0, 0, 0, 0, 0]])
+        state_eighteen = np.array([[0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0],
+                                    [0, 0, 0, 0, 0]])
+        world5 = World(5)
+        world5.world = state_sixteen
+        sim5 = Simulator(world5, [3], [2, 3], 6)
+        sim5.update()
+        sim5.update()
+        sim5.update()
+        self.assertSequenceEqual(sim5.get_world().world.tolist(), state_seventeen.tolist())
+        sim5.update()
+        sim5.update()
+        sim5.update()
+        self.assertSequenceEqual(sim5.get_world().world.tolist(), state_eighteen.tolist())
+
+        state_nineteen = np.array([[0, 0, 0, 0, 0],
+                                   [0, 6, 0, 6, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [0, 0, 6, 0, 0],
+                                   [0, 0, 0, 0, 0]])
+        state_twenty = np.array([[0, 0, 0, 0, 0],
+                                   [0, 5, 0, 5, 0],
+                                   [0, 0, 0, 0, 0],
+                                   [0, 0, 5, 0, 0],
+                                   [0, 0, 0, 0, 0]])
+        state_twentyone = np.array([[0, 0, 0, 0, 0],
+                                 [0, 4, 0, 4, 0],
+                                 [0, 0, 0, 0, 0],
+                                 [0, 0, 4, 0, 0],
+                                 [0, 0, 0, 0, 0]])
+        state_twentytwo = np.array([[0, 0, 0, 0, 0],
+                                    [0, 3, 0, 3, 0],
+                                    [0, 0, 6, 0, 0],
+                                    [0, 0, 3, 0, 0],
+                                    [0, 0, 0, 0, 0]])
+
+        world6 = World(5)
+        world6.world = state_nineteen
+        sim6 = Simulator(world6, birthage=6, submissive_and_breedable=[2,3,4])
+        self.assertSequenceEqual(sim6.get_world().world.tolist(), state_nineteen.tolist())
+        sim6.update()
+        self.assertSequenceEqual(sim6.get_world().world.tolist(), state_twenty.tolist())
+        sim6.update()
+        self.assertSequenceEqual(sim6.get_world().world.tolist(), state_twentyone.tolist())
+        sim6.update()
+        self.assertSequenceEqual(sim6.get_world().world.tolist(), state_twentytwo.tolist())
+
 
     def test_get_generation(self):
         """
