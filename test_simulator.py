@@ -17,6 +17,85 @@ class TestSimulator(TestCase):
         """
         self.assertIsInstance(self.sim.update(), World)
 
+        state_one = np.array([[0, 0, 0, 0, 0],
+                              [0, 0, 1, 1, 0],
+                              [0, 0, 1, 1, 0],
+                              [0, 0, 0, 0, 0],
+                              [0, 0, 0, 0, 0]])
+
+        world1 = World(5)
+        world1.world = state_one
+        sim1 = Simulator(world1)
+        self.assertSequenceEqual(sim1.get_world().world.tolist(), state_one.tolist())
+        sim1.update()
+        self.assertSequenceEqual(sim1.get_world().world.tolist(), state_one.tolist())
+        sim1.update()
+        self.assertSequenceEqual(sim1.get_world().world.tolist(), state_one.tolist())
+        sim1.update()
+        self.assertSequenceEqual(sim1.get_world().world.tolist(), state_one.tolist())
+
+        state_two = np.array([[0, 0, 0, 0, 0],
+                              [0, 1, 1, 1, 0],
+                              [0, 1, 0, 0, 0],
+                              [0, 0, 0, 0, 0],
+                              [0, 0, 0, 0, 0]])
+        state_three = np.array([[0, 0, 1, 0, 0],
+                                [0, 1, 1, 0, 0],
+                                [0, 1, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0]])
+        state_four = np.array([[0, 1, 1, 0, 0],
+                               [0, 1, 1, 0, 0],
+                               [0, 1, 1, 0, 0],
+                               [0, 0, 0, 0, 0],
+                               [0, 0, 0, 0, 0]])
+        state_five = np.array([[0, 1, 1, 0, 0],
+                               [1, 0, 0, 1, 0],
+                               [0, 1, 1, 0, 0],
+                               [0, 0, 0, 0, 0],
+                               [0, 0, 0, 0, 0]])
+
+        world2 = World(5)
+        world2.world = state_two
+        sim2 = Simulator(world2)
+        self.assertIs(sim2.get_world().world, state_two)
+        sim2.update()
+        self.assertSequenceEqual(sim2.get_world().world.tolist(), state_three.tolist())
+        sim2.update()
+        self.assertSequenceEqual(sim2.get_world().world.tolist(), state_four.tolist())
+        sim2.update()
+        self.assertSequenceEqual(sim2.get_world().world.tolist(), state_five.tolist())
+        sim2.update()
+        self.assertSequenceEqual(sim2.get_world().world.tolist(), state_five.tolist())
+
+        state_six = np.array([[0, 0, 1, 0, 0],
+                              [0, 0, 1, 0, 0],
+                              [0, 0, 1, 0, 0],
+                              [0, 0, 1, 0, 0],
+                              [0, 0, 0, 0, 0]])
+        state_seven = np.array([[0, 0, 0, 0, 0],
+                                [0, 1, 1, 1, 0],
+                                [0, 1, 1, 1, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0]])
+        state_eight = np.array([[0, 0, 1, 0, 0],
+                                [0, 1, 0, 1, 0],
+                                [0, 1, 0, 1, 0],
+                                [0, 0, 1, 0, 0],
+                                [0, 0, 0, 0, 0]])
+
+        world3 = World(5)
+        world3.world = state_six
+        sim3 = Simulator(world3)
+        self.assertIs(sim3.get_world().world, state_six)
+        sim3.update()
+        self.assertSequenceEqual(sim3.get_world().world.tolist(), state_seven.tolist())
+        sim3.update()
+        self.assertSequenceEqual(sim3.get_world().world.tolist(), state_eight.tolist())
+        sim3.update()
+        self.assertSequenceEqual(sim3.get_world().world.tolist(), state_eight.tolist())
+        sim3.update()
+        self.assertSequenceEqual(sim3.get_world().world.tolist(), state_eight.tolist())
 
 
     def test_get_generation(self):
