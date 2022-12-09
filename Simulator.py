@@ -26,7 +26,21 @@ class Simulator:
         """
         self.generation += 1
 
-        #TODO: Do something to evolve the generation
+        change_list = []
+
+        for x in range(self.world.width):
+            for y in range(self.world.height):
+                Neighbours = self.world.get_neighbours(x, y)
+                alive_Neighbours = len([i for i, e in enumerate(Neighbours) if e != 0])
+                if self.world.get(x, y) != 0 and alive_Neighbours < 2:
+                    change_list.append((x, y, 0))
+                elif self.world.get(x, y) != 0 and alive_Neighbours > 3:
+                    change_list.append((x, y, 0))
+                elif self.world.get(x, y) == 0 and alive_Neighbours == 3:
+                    change_list.append((x, y, 1))
+
+        for x, y, value in change_list:
+            self.world.set(x, y, value)
 
         return self.world
 
