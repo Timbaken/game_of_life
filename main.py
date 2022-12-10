@@ -2,8 +2,8 @@ from Visualisation import *
 from Simulator import *
 import time
 
-grid_width = 10
-grid_heigth = 10
+grid_width = 5
+grid_heigth = 5
 
 # Configuratie
 VISUALISATION=True
@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
 
     w = World(grid_width, grid_heigth)
-    sim = Simulator(w)
+    sim = Simulator(w, [3], [2, 3])
 
     if VISUALISATION:
         vis = Visualisation(sim)
